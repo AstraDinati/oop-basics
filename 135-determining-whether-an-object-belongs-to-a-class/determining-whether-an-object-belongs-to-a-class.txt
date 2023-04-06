@@ -1,0 +1,390 @@
+Определение принадлежности объекта к классу
+Сейчас мы с вами изучим оператор instanceof. Данный оператор используется 
+для определения того, является ли текущий объект экземпляром указанного 
+класса.
+
+Давайте посмотрим на примере. Пусть у нас даны какие-то два класса:
+
+<?php
+	// Первый класс:
+	class Class1
+	{
+		
+	}
+	
+	// Второй класс:
+	class Class2
+	{
+		
+	}
+?>
+Создадим объект первого класса:
+
+<?php
+	$obj = new Class1;
+?>
+Проверим принадлежность объекта из переменной $obj первому классу и 
+второму:
+
+<?php
+	// Выведет true, тк объект принадлежит 
+		классу Class1: 
+	var_dump($obj instanceof Class1);
+	
+	// Выведет false, тк 
+		объект НЕ принадлежит 
+		классу Class2: 
+	var_dump($obj instanceof Class2);
+?>
+№1⊗ppOpBsOI
+
+Сделайте класс Employee с публичными свойствами name (имя) и salary 
+(зарплата).
+
+№2⊗ppOpBsOI
+
+Сделайте класс Student с публичными свойствами name (имя) и scholarship 
+(стипендия).
+
+№3⊗ppOpBsOI
+
+Создайте по 3 объекта каждого класса и в произвольном порядке запишите их 
+в массив $arr.
+
+№4⊗ppOpBsOI
+
+Переберите циклом массив $arr и выведите на экран столбец имен всех 
+работников.
+
+№5⊗ppOpBsOI
+
+Аналогичным образом выведите на экран столбец имен всех студентов.
+
+№6⊗ppOpBsOI
+
+Переберите циклом массив $arr и с его помощью найдите сумму зарплат 
+работников и сумму стипендий студентов. После цикла выведите эти два 
+числа на экран.
+
+Оператор instanceof и наследование
+Пусть теперь у нас есть родительский класс и дочерний:
+
+<?php
+	// Родительский класс:
+	class ParentClass
+	{
+		
+	}
+	
+	// Дочерний класс:
+	class ChildClass extends ParentClass
+	{
+		
+	}
+?>
+Создадим объект дочернего класса:
+
+<?php
+	$obj = new ChildClass;
+?>
+Проверим теперь с помощью instanceof, принадлежит ли наш объект классу 
+ParentClass и классу ChildClass:
+
+<?php
+	var_dump($obj instanceof 
+		ChildClass);  // выведет 
+		true 
+	var_dump($obj instanceof 
+		ParentClass); // тоже выведет 
+		true 
+?>
+Как вы видите из примера - оператор instanceof не делает различия при 
+проверки между родительскими и дочерними классами.
+
+Не путайтесь - если объект будет действительно родительского класса то, 
+конечно же, проверка на принадлежность к дочернему классу вернет false:
+
+<?php
+	$obj = new ParentClass; 
+		// объект родительского 
+		класса 
+	
+	var_dump($obj instanceof ParentClass); 
+		// выведет true 
+	var_dump($obj instanceof 
+		ChildClass); // выведет 
+		false 
+?>
+№7⊗ppOpBsOI
+
+Сделайте класс User с публичным свойствами name и surname.
+
+№8⊗ppOpBsOI
+
+Сделайте класс Employee, который будет наследовать от класса User и 
+добавлять свойство salary.
+
+№9⊗ppOpBsOI
+
+Сделайте класс City с публичными свойствами name и population.
+
+№10⊗ppOpBsOI
+
+Создайте 3 объекта класса User, 3 объекта класса Employee, 3 объекта 
+класса City, и в произвольном порядке запишите их в массив $arr.
+
+№11⊗ppOpBsOI
+
+Переберите циклом массив $arr и выведите на экран столбец свойств name 
+тех объектов, которые принадлежат классу User или потомку этого класса.
+
+№12⊗ppOpBsOI
+
+Переберите циклом массив $arr и выведите на экран столбец свойств name 
+тех объектов, которые не принадлежат классу User или потомку этого класса.
+
+№13⊗ppOpBsOI
+
+Переберите циклом массив $arr и выведите на экран столбец свойств name 
+тех объектов, которые принадлежат именно классу User, то есть не классу 
+City и не классу Employee.
+
+Применение
+Давайте рассмотрим применение оператора instanceof на достаточно сложном 
+примере. Пусть у нас есть вот такой класс для работников:
+
+<?php
+	class Employee
+	{
+		private $name;
+		private $salary;
+		
+		public function __construct($name, 
+			$salary) 
+		{
+			$this->name = $name;
+			$this->salary = $salary;
+		}
+		
+		public function getName()
+		{
+			return $this->name;
+		}
+		
+		public function getSalary()
+		{
+			return $this->salary;
+		}
+	}
+?>
+Пусть также есть такой класс для студентов:
+
+<?php
+	class Student
+	{
+		private $name;
+		private $scholarship; // стипендия
+		
+		public function __construct($name, 
+			$scholarship) 
+		{
+			$this->name = $name;
+			$this->scholarship = $scholarship;
+		}
+		
+		public function getName()
+		{
+			return $this->name;
+		}
+		
+		public function getScholarship()
+		{
+			return $this->scholarship;
+		}
+	}
+?>
+Как вы видите, и работник, и студент имеют имя и какой-то доход: у 
+работника это зарплата, а у студента - стипендия.
+
+Пусть теперь мы хотим сделать класс UsersCollection, предназначенный для 
+хранения работников и студентов. Работников мы будем хранить в свойстве 
+employees, а студентов - в свойстве students:
+
+<?php
+	class UsersCollection
+	{
+		private $employees = []; // массив 
+			работников 
+		private $students = []; // массив 
+			студентов 
+	}
+?>
+Давайте теперь реализуем единый метод add для добавления и работников, и 
+студентов. Этот метод параметром будет принимать объект и, если это 
+работник - добавлять его в массив работников, а если студент - в массив 
+студентов. Пример того, как мы будем пользоваться методом нашим методом 
+после его реализации:
+
+<?php
+	$usersCollection = new UsersCollection;
+	
+	$usersCollection->add(new 
+		Employee('john', 200)); // попадет 
+		к работникам 
+	$usersCollection->add(new 
+		Student('eric', 100));  // попадет 
+		к студентам 
+?>
+Итак, давайте реализуем описанный метод add. Здесь нам и поможет изученный
+ нами оператор instanceof:
+
+<?php
+	class UsersCollection
+	{
+		private $employees = []; // массив 
+			работников 
+		private $students = [];  // массив 
+			студентов 
+		
+		// Добавление в массивы:
+		public function add($user)
+		{
+			// Если передан объект класса Employee:
+			if ($user instanceof Employee) {
+				$this->employees[] = $user; // добавляем 
+					к работникам 
+			}
+			
+			// Если передан объект класса Student:
+			if ($user instanceof Student) {
+				$this->students[] = $user; // добавляем 
+					к студентам 
+			}
+		}
+	}
+?>
+Давайте также реализуем методы для нахождения суммарной зарплаты и 
+суммарной стипендии:
+
+<?php
+	class UsersCollection
+	{
+		private $employees = [];
+		private $students = [];
+		
+		public function add($user)
+		{
+			if ($user instanceof Employee) {
+				$this->employees[] = $user;
+			}
+			
+			if ($user instanceof Student) {
+				$this->students[] = $user;
+			}
+		}
+		
+		// Получаем суммарную зарплату:
+		public function getTotalSalary()
+		{
+			$sum = 0;
+			
+			foreach ($this->employees as $employee) {
+				$sum += $employee->getSalary();
+			}
+			
+			return $sum;
+		}
+		
+		// Получаем суммарную стипендию:
+		public function getTotalScholarship()
+		{
+			$sum = 0;
+			
+			foreach ($this->students as $student) {
+				$sum += $student->getScholarship();
+			}
+			
+			return $sum;
+		}
+	}
+?>
+Реализуем также метод, который будет находить общую сумму платежей и 
+работникам, и студентам:
+
+<?php
+	class UsersCollection
+	{
+		private $employees = [];
+		private $students = [];
+		
+		public function add($user)
+		{
+			if ($user instanceof Employee) {
+				$this->employees[] = $user;
+			}
+			
+			if ($user instanceof Student) {
+				$this->students[] = $user;
+			}
+		}
+		
+		public function getTotalSalary()
+		{
+			$sum = 0;
+			
+			foreach ($this->employees as $employee) {
+				$sum += $employee->getSalary();
+			}
+			
+			return $sum;
+		}
+		
+		public function getTotalScholarship()
+		{
+			$sum = 0;
+			
+			foreach ($this->students as $student) {
+				$sum += $student->getScholarship();
+			}
+			
+			return $sum;
+		}
+		
+		// Получаем общую 
+			сумму платежей и работникам, 
+			и студентам: 
+		public function getTotalPayment()
+		{
+			return $this->getTotalScholarship() + $this->
+				getTotalSalary(); 
+		}
+	}
+?>
+Проверим работу нашего класса:
+
+<?php
+	$usersCollection = new UsersCollection;
+	
+	$usersCollection->add(new Student('kyle', 
+		100)); 
+	$usersCollection->add(new Student('luis', 
+		200)); 
+	
+	$usersCollection->add(new Employee('john', 
+		300)); 
+	$usersCollection->add(new Employee('eric', 
+		400)); 
+	
+	// Получим полную сумму стипендий:
+	echo $usersCollection->getTotalScholarship();
+	
+	// Получим полную сумму зарплат:
+	echo $usersCollection->getTotalSalary();
+	
+	// Получим полную сумму платежей:
+	echo $usersCollection->getTotalPayment();
+?>
+№14⊗ppOpBsOI
+
+Скопируйте мой код классов Employee и Student и самостоятельно не 
+подсматривая в мой код реализуйте такой же класс UsersCollection.

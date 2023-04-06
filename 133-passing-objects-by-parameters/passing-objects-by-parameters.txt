@@ -1,0 +1,170 @@
+Передача объектов параметрами
+Пусть у нас дан вот такой класс Employee:
+
+<?php
+	class Employee
+	{
+		private $name;
+		private $salary;
+		
+		public function __construct($name, 
+			$salary) 
+		{
+			$this->name = $name;
+			$this->salary = $salary;
+		}
+		
+		public function getName()
+		{
+			return $this->name;
+		}
+		
+		public function getSalary()
+		{
+			return $this->salary;
+		}
+	}
+?>
+Давайте сделаем еще и класс EmployeesCollection, который будет хранить
+ массив работников, то есть массив объектов класса Employee.
+
+Пусть работники будут храниться в свойстве employees, а для добавления
+ работников будет существовать метод add. Этот метод параметром будет
+  принимать объект класса Employee и записывать его в конец массива 
+  $this->employees:
+
+<?php
+	class EmployeesCollection
+	{
+		private $employees = []; // массив 
+			работников, по умолчанию пустой 
+		
+		// Добавляем нового работника:
+		public function add($employee)
+		{
+			$this->employees[] = $employee; 
+				// $employee - объект класса Employee 
+		}
+	}
+?>
+Давайте также добавим в наш класс метод getTotalSalary, который будет 
+находить суммарную зарплату всех хранящихся работников:
+
+<?php
+	class EmployeesCollection
+	{
+		private $employees = [];
+		
+		public function add($employee)
+		{
+			$this->employees[] = $employee;
+		}
+		
+		// Находим суммарную зарплату:
+		public function getTotalSalary()
+		{
+			$sum = 0;
+			
+			// Перебираем работников циклом:
+			foreach ($this->employees as $employee) {
+				$sum += $employee->getSalary(); // получаем з/п работника через метод getSalary()
+			}
+			
+			return $sum;
+		}
+	}
+?>
+Давайте проверим работу класса EmployeesCollection:
+
+<?php
+	$employeesCollection = new EmployeesCollection;
+	
+	$employeesCollection->add(new Employee('john', 
+		100)); 
+	$employeesCollection->add(new Employee('eric', 
+		200)); 
+	$employeesCollection->add(new Employee('kyle', 
+		300)); 
+	
+	echo $employeesCollection->getTotalSalary(); 
+		// выведет 600 
+?>
+Давайте сделаем наш класс EmployeesCollection более жизненным и 
+добавим метод получения всех работников и метод подсчета:
+
+<?php
+	class EmployeesCollection
+	{
+		private $employees = [];
+		
+		// Получаем всех работников в виде массива:
+		public function get()
+		{
+			return $this->employees;
+		}
+		
+		// Подсчитываем количество хранимых 
+			работников: 
+		public function count()
+		{
+			return count($this->employees);
+		}
+		
+		public function add($employee)
+		{
+			$this->employees[] = $employee;
+		}
+		
+		public function getTotalSalary()
+		{
+			$sum = 0;
+			
+			foreach ($this->employees as $employee) {
+				$sum += $employee->getSalary();
+			}
+			
+			return $sum;
+		}
+	}
+?>
+№1⊗ppOpBsPOBP
+
+Сделайте класс Product, в котором будут приватные свойства name, price
+ и quantity. Пусть все эти свойства будут доступны только для чтения.
+
+№2⊗ppOpBsPOBP
+
+Добавьте в класс Product метод getCost, который будет находить полную
+ стоимость продукта (сумма умножить на количество).
+
+№3⊗ppOpBsPOBP
+
+Сделайте класс Cart. Данный класс будет хранить список продуктов 
+(объектов класса Product) в виде массива. Пусть продукты хранятся в 
+свойстве products.
+
+№4⊗ppOpBsPOBP
+
+Реализуйте в классе Cart метод add для добавления продуктов.
+
+№5⊗ppOpBsPOBP
+
+Реализуйте в классе Cart метод remove для удаления продуктов. Метод 
+должен принимать параметром название удаляемого продукта.
+
+№6⊗ppOpBsPOBP
+
+Реализуйте в классе Cart метод getTotalCost, который будет находить 
+суммарную стоимость продуктов.
+
+№7⊗ppOpBsPOBP
+
+Реализуйте в классе Cart метод getTotalQuantity, который будет 
+находить суммарное количество продуктов (то есть сумму свойств 
+quantity всех продуктов).
+
+№8⊗ppOpBsPOBP
+
+Реализуйте в классе Cart метод getAvgPrice, который будет находить 
+среднюю стоимость продуктов (суммарная стоимость делить на количество 
+всех продуктов).

@@ -1,0 +1,114 @@
+is_subclass_of — Проверяет, содержит ли объект в своём дереве предков 
+указанный класс либо прямо реализует его
+
+Описание 
+is_subclass_of(mixed $object_or_class, string $class, bool $allow_string 
+= true): bool
+Проверяет, содержит ли объект object_or_class в своём дереве предков 
+класс class либо прямо реализует его.
+
+Список параметров 
+object_or_class - Имя класса или экземпляр объекта. В случае отсутствия
+ такого класса никакой ошибки сгенерировано не будет.
+
+class - -Имя класса
+
+allow_string - Если параметр установлен в false, то не допускается имя 
+класса в виде строки в качестве параметра object_or_class. Это также 
+предотвращает вызов автозагрузчика, если класс не существует.
+
+Возвращаемые значения 
+Эта функция возвращает true, если объект object_or_class принадлежит 
+к классу, наследующему от class, иначе она возвращает false.
+
+Примеры ¶
+Пример #1 Пример использования is_subclass_of()
+
+<?php
+// объявляем класс
+class WidgetFactory
+{
+  var $oink = 'moo';
+}
+
+// объявляем наследника
+class WidgetFactory_Child extends WidgetFactory
+{
+  var $oink = 'oink';
+}
+
+// создаём новый объект
+$WF = new WidgetFactory();
+$WFC = new WidgetFactory_Child();
+
+if (is_subclass_of($WFC, 'WidgetFactory')) {
+  echo "да, \$WFC наследует WidgetFactory\n";
+} else {
+  echo "нет, \$WFC не наследует WidgetFactory\n";
+}
+
+
+if (is_subclass_of($WF, 'WidgetFactory')) {
+  echo "да, \$WF наследует WidgetFactory\n";
+} else {
+  echo "нет, \$WF не наследует WidgetFactory\n";
+}
+
+if (is_subclass_of('WidgetFactory_Child', 'WidgetFactory')) {
+  echo "да, WidgetFactory_Child наследует WidgetFactory\n";
+} else {
+  echo "нет, WidgetFactory_Child не наследует WidgetFactory\n";
+}
+?>
+Результат выполнения данного примера:
+
+да, $WFC наследует WidgetFactory
+нет, $WF не наследует WidgetFactory
+да, WidgetFactory_Child наследует WidgetFactory
+Пример #2 Пример использования is_subclass_of() с интерфейсами
+
+<?php
+// Определяем интерфейс
+interface MyInterface
+{
+  public function MyFunction();
+}
+
+// Определяем класс с реализацией интерфейса
+class MyClass implements MyInterface
+{
+  public function MyFunction()
+  {
+    return "MyClass реализует MyInterface!";
+  }
+}
+
+// Создаём объект
+$my_object = new MyClass;
+
+// Код ниже работает с PHP 5.3.7
+
+// Проверка с помощью экземпляра объекта
+if (is_subclass_of($my_object, 'MyInterface')) {
+  echo "Да, \$my_object является подклассом MyInterface\n";
+} else {
+  echo "Нет, \$my_object не является подклассом MyInterface\n";
+}
+
+// Проверка с помощью имени класса в виде строки
+if (is_subclass_of('MyClass', 'MyInterface')) {
+  echo "Да, MyClass является подклассом MyInterface\n";
+} else {
+  echo "Нет, MyClass не является подклассом MyInterface\n";
+}
+?>
+Результат выполнения данного примера:
+
+Да, $my_object является подклассом MyInterface
+Да, MyClass является подклассом MyInterface
+
+Примечания 
+Замечание:
+
+Вызов этой функции будет использовать все зарегистрированные функции 
+автозагрузки, если класс ещё не известен.

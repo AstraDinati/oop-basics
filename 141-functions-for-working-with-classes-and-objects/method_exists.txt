@@ -1,0 +1,34 @@
+method_exists — Проверяет, существует ли метод в данном классе
+
+Описание
+method_exists(object|string $object_or_class, string $method): bool
+Проверяет, существует ли метод класса в указанном 
+объекте object_or_class.
+
+Список параметров 
+object_or_class - Экземпляр объекта или имя класса
+method - Имя метода
+
+Возвращаемые значения 
+Возвращает true, если метод method определён для указанного объекта 
+object_or_class, иначе возвращает false.
+
+Примеры
+Пример #1 Пример использования method_exists()
+<?php
+$directory = new Directory('.');
+var_dump(method_exists($directory,'read'));
+?>
+
+Результат выполнения данного примера:
+
+bool(true)
+
+Пример #2 Пример статического использования method_exists()
+
+<?php
+var_dump(method_exists('Directory','read'));
+?>
+Результат выполнения данного примера:
+
+bool(true)

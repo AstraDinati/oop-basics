@@ -1,0 +1,43 @@
+get_class_methods — Возвращает массив имён методов класса
+
+Описание
+get_class_methods(object|string $object_or_class): array
+
+Список параметров 
+object_or_class - Имя класса или объект
+
+Возвращаемые значения
+Возвращает массив имён методов, объявленных в классе 
+object_or_class.
+
+Пример
+
+<?php
+
+class myclass {
+    // конструктор
+    function __construct()
+    {
+        return(true);
+    }
+
+    // метод 1
+    function myfunc1()
+    {
+        return(true);
+    }
+
+    // метод 2
+    function myfunc2()
+    {
+        return(true);
+    }
+}
+
+$class_methods = get_class_methods('myclass');
+// или
+$class_methods = get_class_methods(new myclass());
+
+foreach ($class_methods as $method_name) {
+    echo "$method_name\n";
+}

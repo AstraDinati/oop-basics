@@ -1,0 +1,58 @@
+get_parent_class — Возвращает имя родительского класса для объекта 
+или класса
+
+Описание 
+get_parent_class(object|string $object_or_class = ?): string|false
+Возвращает имя родительского класса для объекта или класса.
+
+Список параметров 
+object_or_class
+Тестируемый объект или имя класса. Если вызывается из метода объекта,
+то этот параметр не обязателен.
+
+Возвращаемые значения 
+Возвращает имя родительского класса, если object_or_class является 
+объектом или именем класса.
+
+Замечание:
+Если объект не имеет родителя или переданного класса с таким именем 
+не существует, то возвращается false.
+
+Если функция вызвана без параметров вне объекта, эта функция возвращает 
+false.
+
+
+Примеры 
+Пример #1 Пример использования get_parent_class()
+
+<?php
+
+class Dad {
+    function __construct()
+    {
+    // реализация какой-нибудь логики
+    }
+}
+
+class Child extends Dad {
+    function __construct()
+    {
+        echo "I'm " , get_parent_class($this) , "'s son\n";
+    }
+}
+
+class Child2 extends Dad {
+    function __construct()
+    {
+        echo "I'm " , get_parent_class('child2') , "'s son too\n";
+    }
+}
+
+$foo = new child();
+$bar = new child2();
+
+?>
+Результат выполнения данного примера:
+
+I'm Dad's son
+I'm Dad's son too

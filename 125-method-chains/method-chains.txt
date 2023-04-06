@@ -1,0 +1,81 @@
+Цепочки методов
+Пусть у нас дан класс Arr, который хранит в себе массив чисел и может вычислять сумму этих чисел с помощью метода getSum. Числа могут добавляться по одному с помощью метода add, либо группой с помощью метода push:
+
+<?php
+	class Arr
+	{
+		private $numbers = [];
+		
+		public function add($number)
+		{
+			$this->numbers[] = $number;
+		}
+		
+		public function push($numbers)
+		{
+			$this->numbers = array_merge($this->numbers, $numbers);
+		}
+		
+		public function getSum()
+		{
+			return array_sum($this->numbers);
+		}
+	}
+?>
+Пример использования класса Arr:
+
+<?php
+	$arr = new Arr; // создаем объект
+	
+	$arr->add(1); // добавляем в массив число 1
+	$arr->add(2); // добавляем в массив число 2
+	$arr->push([3, 4]); // добавляем группу чисел
+	
+	echo $arr->getSum(); // находим сумму элементов массива
+?>
+Пусть теперь мы хотим сделать так, чтобы методы вызывались не отдельно, а цепочкой, вот так:
+
+<?php
+	echo $arr->add(1)->add(2)->push([3, 4])->getSum(); // это наша 
+		цель 
+?>
+Для того, чтобы можно было написать такую цепочку, нужно, чтобы все методы, которые участвуют в цепочке возвращали $this (кроме последнего). Поправим наш класс Arr:
+
+<?php
+	class Arr
+	{
+		private $numbers = []; // массив чисел
+		
+		public function add($number)
+		{
+			$this->numbers[] = $number;
+			return $this; // вернем ссылку сами на себя
+		}
+		
+		public function push($numbers)
+		{
+			$this->numbers = array_merge($this->numbers, $numbers);
+			return $this; // вернем ссылку сами на себя
+		}
+		
+		public function getSum()
+		{
+			return array_sum($this->numbers);
+		}
+	}
+?>
+Проверим, что все работает:
+
+<?php
+	$arr = new Arr;
+	echo $arr->add(1)->add(2)->push([3, 4])->getSum(); // выведет 10
+?>
+Можно упростить еще больше:
+
+<?php
+	echo (new Arr)->add(1)->add(2)->push([3, 4])->getSum(); // выведет 10
+?>
+№1⊗ppOpBsMCh
+
+Не подсматривая в мой код самостоятельно реализуйте такой же класс Arr, методы которого будут вызываться в виде цепочки.
+

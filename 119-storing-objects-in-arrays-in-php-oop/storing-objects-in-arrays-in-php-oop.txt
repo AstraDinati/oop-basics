@@ -1,0 +1,103 @@
+Хранение объектов в массивах в ООП на PHP
+Пусть у нас дан вот такой класс User:
+
+<?php
+	class User
+	{
+		public $name;
+		public $age;
+		
+		public function 
+			__construct($name, $age) 
+		{
+			$this->name = $name;
+			$this->age = $age;
+		}
+	}
+?>
+Подключим файл с нашим классом к файлу index.php:
+
+<?php
+	require_once 'User.php';
+?>
+Создадим три объекта нашего класса:
+
+<?php
+	$user1 = new User('john', 21);
+	$user2 = new User('eric', 22);
+	$user3 = new User('kyle', 23);
+?>
+Давайте теперь запишем созданные нами объекты в массив $users:
+
+<?php
+	$user1 = new User('john', 21);
+	$user2 = new User('eric', 22);
+	$user3 = new User('kyle', 23);
+	
+	$users[] = $user1;
+	$users[] = $user2;
+	$users[] = $user3;
+	
+	var_dump($users);
+?>
+В общем-то переменные, в которые мы сохраняем наши объекты, и не нужны. Можем сократить наш код:
+
+<?php
+	$users[] = new User('john', 
+		21); 
+	$users[] = new User('eric', 
+		22); 
+	$users[] = new User('kyle', 
+		23); 
+	
+	var_dump($users);
+?>
+Давайте теперь переделаем наш код в другом стиле - добавим элементы в массив сразу при его создании:
+
+<?php
+	$user1 = new User('john', 21);
+	$user2 = new User('eric', 22);
+	$user3 = new User('kyle', 23);
+	
+	$users = [$user1, $user2, 
+		$user3]; 
+	var_dump($users);
+?>
+Здесь также можно избавится от промежуточных переменных:
+
+<?php
+	$users = [
+		new User('john', 21),
+		new User('eric', 22),
+		new User('kyle', 23)
+	];
+	
+	var_dump($users);
+?>
+Неважно каким способом мы создаем наш массив с объектами - важен сам принцип: объекты можно хранить в массивах. Затем эти объекты можно, к примеру, перебрать циклом. Давайте сделаем это:
+
+<?php
+	$users = [
+		new User('john', 21),
+		new User('eric', 22),
+		new User('kyle', 23)
+	];
+	
+	// Переберем созданный 
+		массив циклом: 
+	foreach ($users as $user) {
+		echo $user->name . 
+			' ' . $user->age . '<br>'; 
+	}
+?>
+№1⊗ppOpBsOIA
+
+Сделайте класс City, в котором будут следующие свойства: name, population (количество населения).
+
+№2⊗ppOpBsOIA
+
+Создайте 5 объектов класса City, заполните их данными и запишите в массив.
+
+№3⊗ppOpBsOIA
+
+Переберите созданный вами массив с городами циклом и выведите города и их население на экран.

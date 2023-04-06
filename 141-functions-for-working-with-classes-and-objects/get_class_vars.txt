@@ -1,0 +1,42 @@
+get_class_vars — Возвращает объявленные по умолчанию свойства 
+класса
+
+Описание
+get_class_vars(string $class): array
+
+Список параметров - class - Имя класса
+
+Возвращаемые значения
+Возвращает ассоциативный массив объявленных свойств класса, 
+видимых из текущей области видимости, с их значением по умолчанию.
+Получившиеся элементы массива имеют форму varname => value. 
+В случае возникновения ошибки возвращается false.
+
+Пример
+
+<?php
+
+class myclass {
+
+    var $var1; // переменная не имеет начального значения...
+    var $var2 = "xyz";
+    var $var3 = 100;
+    private $var4;
+
+    // конструктор
+    function __construct() {
+        // изменим значения некоторых свойств
+        $this->var1 = "foo";
+        $this->var2 = "bar";
+        return true;
+    }
+
+}
+
+$my_class = new myclass();
+
+$class_vars = get_class_vars(get_class($my_class));
+
+foreach ($class_vars as $name => $value) {
+    echo "$name : $value\n";
+}

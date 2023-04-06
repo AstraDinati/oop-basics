@@ -1,0 +1,38 @@
+property_exists — Проверяет, содержит ли объект или класс указанный 
+атрибут
+
+Замечание:
+
+В противоположность isset(), property_exists() возвращает true, даже 
+если свойство имеет значение null.
+
+Описание 
+property_exists(object|string $object_or_class, string $property): bool
+
+Возвращаемые значения 
+Возвращает true, если свойство существует, false, если оно не существует, 
+или null в случае возникновения ошибки.
+
+Примеры 
+Пример #1 Пример использования property_exists()
+
+<?php
+
+class myClass {
+    public $mine;
+    private $xpto;
+    static protected $test;
+
+    static function test() {
+        var_dump(property_exists('myClass', 'xpto')); //true
+    }
+}
+
+var_dump(property_exists('myClass', 'mine'));   //true
+var_dump(property_exists(new myClass, 'mine')); //true
+var_dump(property_exists('myClass', 'xpto'));   //true
+var_dump(property_exists('myClass', 'bar'));    //false
+var_dump(property_exists('myClass', 'test'));   //true
+myClass::test();
+
+?>

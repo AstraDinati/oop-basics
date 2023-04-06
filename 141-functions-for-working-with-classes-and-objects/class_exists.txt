@@ -1,0 +1,36 @@
+class_exists — Проверяет, был ли объявлен класс
+
+Описание
+class_exists(string $class, bool $autoload = true): bool
+Эта функция проверяет, был ли объявлен указанный класс или нет.
+
+Список параметров
+class - Имя класса. Воспринимается без учёта регистра.
+autoload - Вызывать ли по умолчанию __autoload.
+
+Возвращаемые значения 
+Возвращает true, если класс class объявлен, иначе false.
+
+Примеры
+Пример #1 Пример использования class_exists()
+<?php
+// Проверяем существование класса перед его использованием
+if (class_exists('MyClass')) {
+    $myclass = new MyClass();
+}
+
+Пример #2 Пример использования c параметром autoload
+
+<?php
+spl_autoload_register(function ($class_name) {
+    include $class_name . '.php';
+
+    // Проверяем необходимость подключения указанного класса
+    if (!class_exists($class_name, false)) {
+        throw new LogicException("Unable to load class: $class_name");
+    }
+});
+
+if (class_exists(MyClass::class)) {
+    $myclass = new MyClass();
+}
